@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KINA Bet</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div id="logIn"  >
+    <div id="backLogIn">
+      <p>KINA Bet  </p>
+     <div id="form1">
+       Name <br> <input type="text" id="userName" required><br>
+       Amount <br> <input type="number" id="userCash" required>
+      
+        <input type="submit" value="Enter" onclick="homeShow()">
+      </div>
+    </div>
+  </div>
+  <div id="home"  style="display: none;">
+    <div id="nav">
+      <div id="nameUser" style="width: 60px; overflow: hidden;"></div>
+      <div id="amountUserNav" style="width: 70px; overflow: hidden;"></div>
+      <button id="setingSH" onclick="goCasino()">Casino</button>
+       <div id="userSeting">
+        <button id="setingSH" >Setting</button>
+        <br>
+        <div id="moneyManagement">
+          <input type="button" value="Deposit">
+          <input type="button" value="WithDraw">
+        </div>
+       </div>
+    </div>
+    <div id="backAllGames">
+      <div id="gamesBack">
+       <div class="game" id="game1" onclick="guessShow()"></div>
+       Guess
+       <br>
+       <div class="game"id="game2"></div>
+       Slot
+       <br>
+       <div class="game"id="game3"></div>
+       Run
+       <br>
+       <div class="game"id="game3"></div>
+       Run
+       <br>
+       <div class="game"id="game3"></div>
+       Run
+       <br>
+      </div>
+    </div>
+    <div id="guessGameBack"  style="display: none;">
+<div id="machineContainer">
+  <div id="lastsOdds"></div>
+  <div id="machineResult"></div>
+  <div id="posibleOutCome"></div>
+</div>
+<div id="message"> </div>
+<div id="userChoiceBack">
+  <div id="cashBack">
+ 
+    <input type="number" id="userCashBet">
+    
+    
+  </div>
+<div id="sugestedButtonBack">
+  <input type="button" value="100">
+  <input type="button" value="200">
+  <input type="button" value="500">
+  <input type="button" value="1000">
+  <input type="button" value="2000">
+</div>
+<div id="betButtonBack">
+  <input type="number" id="userGuessNumber" value="0">
+  <button id="betBtn" onclick="gameStart()">Bet</button>
+  <button id="waitBtn"  style="border: 2px solid rgb(252, 54, 54); display: none; background-color: rgb(255, 0, 0);">Waiting</button>
+</div>
+</div>
+    </div>
+  </div>
+  <script>
+
+    let  GAMEGUESS= document.getElementById('guessGameBack');
+    let  machine= document.getElementById('machineResult');
+    let  homeIn= document.getElementById('home');
+    let  lastOddBack= document.getElementById('lastsOdds');
+    let  posibleOutComeBack= document.getElementById('posibleOutCome');
+    let  allGamesBack= document.getElementById('backAllGames');
+    let  cashNav= document.getElementById('amountUserNav');
+    let  userGuessNumberBack= document.getElementById('userGuessNumber');
+    let  navName= document.getElementById('nameUser');
+    let  customerName= document.getElementById('userName');
+    let  userCashBetInput= document.getElementById('userCashBet');
+    let  waitBtnBack= document.getElementById('waitBtn');
+    let  messageBack= document.getElementById('message');
+    let  betBtnBack= document.getElementById('betBtn');
+    let  amountUser= document.getElementById('userCash');
+    let  register= document.getElementById('logIn');
+    let x=0;
+    let am= Number(amountUser.value);
+    setInterval(()=>{
+      
+cashNav.innerHTML=amountUser.value+'Frw';
+},1);
+function goCasino(){
+  homeIn.style.display='block';
+  allGamesBack.style.display='block'; 
+  GAMEGUESS.style.display='none';
+
+}
+    function homeShow(){
+register.style.display='none';
+homeIn.style.display='block';
+let am= Number(amountUser.value);
+navName.innerHTML=customerName.value;
+cashNav.innerHTML=am+"FRW";
+
+if(am<10){
+  amountUser.style.border='3px solid white';
+  register.style.display='block';
+homeIn.style.display='none';
+}
+
+    }
+function guessShow(){
+  allGamesBack.style.display='none';
+  GAMEGUESS.style.display='block';
+}
+
+function gameStart(){
+  let runIntervalT= setInterval((startGame),400);
+  x=0;
+  let am= Number(amountUser.value);
+  let guesNumber= Number(userCashBetInput.value);
+  let userGess=Number(userGuessNumberBack.value);
+  let realTimeMoney=setTimeout(()=>{
+cashNav.innerHTML=am+'Frw';
+},1);
+  let randomNumber= Math.floor(Math.random()*3)+2;
+waitBtnBack.style.display='block';
+betBtnBack.style.display='none';
+  console.log(randomNumber);
+  
+  if(guesNumber<=0){
+    messageBack.style.display='block';
+    messageBack.style.backgroundColor="red";
+messageBack.innerHTML="Please enter amount to bet";
+let s= setTimeout(()=>{
+  messageBack.style.display='none';
+  waitBtnBack.style.display='none';
+betBtnBack.style.display='block';
+},2000);
+clearInterval(runIntervalT);
+  }
+  if(amountUser.value==0){
+    messageBack.style.display='block';
+    messageBack.style.backgroundColor="red";
+messageBack.innerHTML="Please enter amount to bet";
+let s= setTimeout(()=>{
+  messageBack.style.display='none';
+  waitBtnBack.style.display='none';
+betBtnBack.style.display='block';
+},2000);
+clearInterval(runIntervalT);
+  }
+
+  else{
+    let am= Number(amountUser.value);
+    let guesNumber= Number(userCashBetInput.value);
+    amountUser.value=amountUser.value-userCashBetInput.value;
+  }
+  if(userGess<0){
+    messageBack.style.display='block';
+    messageBack.style.backgroundColor="red";
+messageBack.innerHTML="Please enter Your choice to bet";
+let s= setTimeout(()=>{
+  messageBack.style.display='none';
+  waitBtnBack.style.display='none';
+betBtnBack.style.display='block';
+},2000);
+clearInterval(runIntervalT);
+  }
+function startGame(){
+  machine.innerHTML=x++ +"x";
+  let guesNumber= Number(userCashBetInput.value);
+if(randomNumber==x){
+  clearInterval(runIntervalT);
+  machine.innerHTML=randomNumber+"x";
+  waitBtnBack.style.display='none';
+betBtnBack.style.display='block';
+lastOddBack.innerHTML+=randomNumber+"x" +"<br>";
+
+}
+if(userGess==randomNumber){
+    messageBack.style.display='block';
+    let am= Number(amountUser.value);
+    messageBack.style.backgroundColor="rgb(59, 255, 75)";
+messageBack.innerHTML="You won"+ " "+ (guesNumber*randomNumber) +"Frw" ;
+amountUser.value=am+(guesNumber*randomNumber);
+console.log("You won"+ " "+ (guesNumber*randomNumber) +"Frw");
+let s= setTimeout(()=>{
+  messageBack.style.display='none';
+  waitBtnBack.style.display='none';
+betBtnBack.style.display='block';
+},2000);
+clearInterval(runIntervalT);
+  }
+}
+}
+
+  </script>
+</body>
+</html>
